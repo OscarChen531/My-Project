@@ -1,0 +1,177 @@
+%input{preamble}   % �ϥΦۤv���@���w�q��
+%-----------------------------------------------------------------------------------------------------------------------
+%% �峹�}�l
+%\title{ \LaTeX  {\MB 簡報}}
+%\author{{\SM 陳威傑}}
+%\date{{\TT \today}} 	% Activate to display a given date or no date (if empty),
+%         						% otherwise the current date is printed 
+%\begin{document}
+%\maketitle
+%\fontsize{12}{22 pt}\selectfont
+\chapter{簡報}
+ 在許多統計課堂或是研討會上，我們常常會看到使用 \LaTeX 做的簡報，這樣的簡報形式，雖然較使用Power Point來的樸素，但是由於他在數學函數上較美觀的編譯模式，因此仍在學術界佔有一定的地位，以下我們以臺北大學汪群超老師的教學網頁\footnote{汪群超老師\LaTeX 教學官方網站 https://ntpuccw.blog/supplements/xetex-tutorial}做為主要的範例。
+\section{簡報套件}
+\LaTeX 簡報的套件主要的套件是{\A beamer}套件，並同時需要在preamble中設定$\backslash$documentclass$\{$beamer$\}$
+\section{簡報樣式}
+在套件{\A beamer}中提供許多設定好的簡報樣式，在preamble中設定$\backslash$usetheme$\{$樣式名稱$\}$即可，同時，也可以使用$\backslash$usecolortheme$\{$色彩配置名稱$\}$調整樣式裡的色彩配置狀態，以下列舉一些樣式名稱與其呈現效果，更多的樣式與色彩配置可以參考網路資源\footnote{https://hartwork.org/beamer-theme-matrix/}\\
+\begin{figure}[H]
+  \centering
+  \subfloat[usetheme=Berlin]{\includegraphics[scale=0.25]{\imgdir{Berlin.png}}}
+  \subfloat[usetheme=Warsaw]{\includegraphics[scale=0.25]{\imgdir{Warsaw.jpg}}}\\
+  \subfloat[usetheme=Darmstadt]{\includegraphics[scale=0.25]{\imgdir{Darmstadt.png}}}
+  \subfloat[usetheme=Boadilla]{\includegraphics[scale=0.25]{\imgdir{Boadilla.png}}}\caption{不同usetheme}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \subfloat[usecolortheme=wolverine]{\includegraphics[scale=0.25]{\imgdir{wolverine.png}}}
+  \subfloat[usecolortheme=dove]{\includegraphics[scale=0.25]{\imgdir{dove.png}}}\\
+  \subfloat[usecolortheme=dolphin]{\includegraphics[scale=0.25]{\imgdir{dolphin.png}}}
+  \subfloat[usecolortheme=fly]{\includegraphics[scale=0.25]{\imgdir{fly.png}}}\caption{不同usecolortheme}
+\end{figure} 
+\section{首頁}
+簡報的首頁通常會包含簡報標題、作者、單位與時間,，而在此同時，也同時會設定個頁頁首或是頁尾的呈現形式，可參考圖\ref{fig:title}\\
+\begin{table}[H]\caption{首頁呈現}\label{wide}
+    \centering
+\begin{tabular}{cp{8cm}}
+\extrarowheight=10pt
+\\\hline
+程式 & 效果\\
+\hline
+  $\backslash$ title $[$ A $]$ $\{$ $\{$B$\}$ $\}$  & 標題，會將A呈現在簡報的最下方中間的位置，將B呈現在簡報起始頁
+\\\hline  % &代表換欄 \\代表換下一列
+  $\backslash$ subtitle $[$ A $]$ $\{$ $\{$B$\}$ $\}$  & 副標題，會將A呈現在簡報起始頁做為副標題
+\\hline
+  $\backslash$ author $[$ A $]$ $\{$ $\{$B$\}$ $\}$  & 作者，會將A呈現在簡報的最下方中間的位置，將B呈現在簡報起始頁
+\\\hline
+  $\backslash$ institute $[$ A $]$ $\{$ $\{$B$\}$ $\}$  & 單位，會將A呈現在簡報的最下方中間的位置，將B呈現在簡報起始頁
+\\\hline
+  $\backslash$date$\{$日期$\}$ & 顯示日期，若為製作當天，可使用$\backslash$today，也可以使用$\backslash$empty讓日期不顯示  \\\hline
+    \end{tabular}
+    \end{table}
+    \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{\imgdir{title.jpg}}
+    \caption{首頁設定}\label{fig:title}
+    \end{figure}
+\section{簡報內容}
+進行簡報內容輸入前，需使用$\backslash$frame$\{$簡報內容$\}$，另外，因目錄的製作與\LaTeX 中{\A section}相關的函數有關，因此，若需要自動創造簡報目錄，需在$\backslash$frame$\{$簡報內容$\}$前加入{\A section}相關的函數，以下列出特殊頁面或功能所需的程式碼
+\begin{table}[H]\caption{首頁呈現}\label{wide}
+    \centering
+\begin{tabular}{cp{8cm}}
+\extrarowheight=10pt
+\\\hline
+程式 & 效果\\
+\hline
+  $\backslash$ frametitle$\{$A$\}$  & 將A視為該頁簡報之標題
+\\\hline  
+  $\backslash$ framesubtitle$\{$A$\}$ & 將A視為該頁簡報之副標題
+\\\hline
+
+  $\backslash$ titlepage & 建立首頁
+\\\hline
+  $\backslash$ tableofcontents  & 建立目錄
+\\\hline
+  $\backslash$date$\{$日期$\}$ & 顯示日期，若為製作當天，可使用$\backslash$today，若需指定一天，則可以自行輸入與呈現的格式與時間，也可以使用$\backslash$empty讓日期不顯示  \\\hline
+      \end{tabular}
+    \end{table}
+另外，若輸入數學符號、表格或圖片時，其指令皆一致，可參考前面章節
+\section*{小結}
+\LaTeX 簡報的製作論花俏的話，當然無法媲美Microsoft系列的Power Point，但是他表現的方式簡單明瞭，當然在數學函數的輸入上一樣無可匹敵，因此仍有一群喜好者，而且，在大型的數學或統計研討會上，真的都是\LaTeX 的天下，而且若結合R Markdowm，在R中跑的程式與結果便可以直接秀在簡報中，這樣方便的工具，真的還是很重要的。
+
+\chapter{製作成書}
+ 將不同章節的\LaTeX 文件編排好後，可以使用\LaTeX 內部書目編排的指令，讓章節自動編排成書，也可以自動生成目錄、參照與索引等等，甚至還可以自動幫你編排成章節頁在左邊等等的功能，下列程式說明與範例參考自臺北大學汪群超老師的教學網頁\footnote{汪群超老師\LaTeX 教學官方網站 https://ntpuccw.blog/supplements/xetex-tutorial}，以及維基百科\footnote{維基百科\LaTeX 教學 https://reurl.cc/pjg7e}網路資源\footnote{網路資源\LaTeX 教學 https://reurl.cc/VvEKn}。
+\section{型態設定}
+\LaTeX 製作書籍並不需要額外下載套件，僅須在preamble中設定$\backslash$documentclass$\{$book$\}$即可
+\section{頁眉頁足}
+書本的頁眉與頁足是畫龍點睛的，\LaTeX 中可以使用{\A fancyhdr}套件，便可以使用讓頁眉與頁足的表現更加多樣，可以在使用$\backslash$pagestyle$\{$fancy$\}$後，加入$\backslash$fancyhead$[$位置$]$ $\{$內容$\}$修改頁眉或$\backslash$fancyfoot$[$位置$]$ $\{$內容$\}$修改頁足，位置與內容可參考下表\\
+\begin{table}[h]\caption{頁眉頁足位置}\label{fancy_site} 
+    \centering
+    \extrarowheight=8pt
+
+        %加入標題與標號參照的文字
+      %加高行高2pt
+{\begin{tabular}{lc}
+\extrarowheight=10pt 
+\\\hline
+程式& 表現   \\\hline
+  E  & 偶數頁   \\\hline  % &代表換欄 \\代表換下一列
+  O  & 基數頁   \\\hline
+  L  & 左邊     \\\hline
+  R  & 右邊     \\\hline
+  C  & 中間     \\\hline
+  H  & 上方     \\\hline
+  F  & 下方     \\\hline
+    \end{tabular}}       
+\end{table}  
+\begin{table}[h]\caption{頁眉頁足內容}\label{fancy_in} 
+    \centering
+
+{\begin{tabular}{lc}
+\extrarowheight=10pt  
+\\\hline
+  $\backslash$thepage  & 此頁頁碼   \\\hline  % &代表換欄 \\代表換下一列
+  $\backslash$leftmark  & 此chapter標題   \\\hline
+  $\backslash$rightmark  & 小節標題     \\\hline
+  $\backslash$thechapter  & 此chapter編號     \\\hline
+  $\backslash$thesection  & 此section編號     \\\hline
+    \end{tabular}}       
+\end{table}  
+    
+\section{頁碼}
+頁碼的使用在\LaTeX 中就很明顯的比使用WORD來的方便，不管是不要頁碼，還是要將頁碼編排的樣式更改，都簡單的指令便可以達到，使用$\backslash$pagenumbering$\{$編碼方式$\}$，編碼方式可以詳見下列表格，同時，也可以調整編碼起始的數值，僅需使用$\backslash$setcounter$\{$page$\}$ $\{$起始數值$\}$即可
+\begin{table}[H]\caption{編碼方式}\label{numbering}
+    \centering
+{\begin{tabular}{lc}
+\extrarowheight=10pt
+\\\hline
+程式 & 效果\\
+\hline
+  roman   & 羅馬字母
+\\\hline  % &代表換欄 \\代表換下一列
+  alph & 英文字母
+\\hline
+  arabic& 阿拉伯數字
+\\\hline
+  $\backslash$URCornerWallPaper & 右上角
+\\\hline
+  $\backslash$LRCornerWallPaper & 右下角
+\\\hline
+    \end{tabular}}
+    \end{table}
+    
+\section{浮水印}
+浮水印的製作可以讓頁面多的一些風味，使用{\A wallpaper}套件，並輸入$\backslash$位置$\{$圖片大小比例$\}$ $\{$圖片路徑與名稱$\}$，其中，位置的選擇可以有以下幾種，而在下列程式碼前加{\A This}則可以僅限定該頁的浮水印
+種
+\begin{table}[H]\caption{浮水印位置}\label{wallpaper_site}
+    \centering
+    
+\begin{tabular}{lc}
+\extrarowheight=10pt
+\\\hline
+程式 & 效果\\
+\hline
+  $\backslash$CenterWallPaper   & 頁面正中間
+\\\hline  % &代表換欄 \\代表換下一列
+  $\backslash$ULCornerWallPaper & 左上角
+\\\hline
+  $\backslash$ LLCornerWallPaper& 左下角
+\\\hline
+  $\backslash$URCornerWallPaper & 右上角
+\\\hline
+  $\backslash$LRCornerWallPaper & 右下角
+\\\hline
+    \end{tabular}
+    \end{table}
+
+\section{書內容}
+書籍的內容編寫方式簡單，僅需依照上面幾張的方式便可以輸入漂亮的方程式、表格與圖片等等，然而，若已經將內容各自編排置其所屬的\LaTeX 文件檔中，可以使用$\backslash$include$\{$檔案名稱$\}$，不過此檔案需與書本編排的檔案存在同一資料夾中
+
+\section{目錄}
+在製作目錄的過程中，如果在書寫文件時有依照section等編排順序進行，那僅需在要出現目錄的地方輸入$\backslash$setcounter$\{$tocdepth$\}$ $\{$標題階層$\}$，在標題階層中輸入的數字可以決定哪些標題會出現在目錄中，接著，使用$\backslash$tableofcontents$($章節目錄$)$、$\backslash$listoffigures$($圖目錄$)$與$\backslash$listoftables$($表目錄$)$即可。
+
+\section{索引}
+索引和\index{目錄}目錄一樣，都能讓使用者在搜尋上更加方便，{\A makeidx}套件在\LaTeX 中便是用來製作索引的工具，必須在文件$\backslash$begin$\{$document$\}$前加入$\backslash$makeindex，在要呈現索引的地方輸入$\backslash$printondex，在要做為索引的文字前加入$\backslash$index$\{$該文字$\}$即可
+
+\section*{小結}
+書籍的編排還是建立在最一開始的數學函數、圖片等等使用，額外加的東西沒有很多，也算是一種整合型的功能，不過索引方面可能就不是很親民了，在編排上的確會遇到一些阻礙，還有進步的空間。
+%\end{document}

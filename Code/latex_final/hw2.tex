@@ -1,0 +1,592 @@
+%
+%\input{preamble_CJK}   % 使用自己維護的定義檔
+%
+%%-----------------------------------------------------------------------------------------------------------------------
+%% 文章開始
+%\chapter title{ \LaTeX  {\MB 表格、圖形與其他}}
+%\author{{\SM 陳威傑}}
+%\date{{\TT \today}} 	% Activate to display a given date or no date (if empty),
+%         						% otherwise the current date is printed 
+%\begin{document}
+\chapter{表格}
+表格的製作一直都是統計人必須面對的事情，常常我們會將量化後資料的統計量使用表格的方式呈現不同組別的數值或是其檢定結果，而有些統計軟體也會在Output的地方使用表格來呈現，像是SAS或SPSS，也因此，若我們能善用表格編排，不僅能讓讀者更輕易的了解內容，在具有比較性質的說明上也會更事半功倍。
+\section{基礎表格製作}
+\subsection{表格製作}
+表格的製作開始於$\backslash$begin$\{$tabular$\}$，並須在後方加入$\{$...$\}$，其中，若所需的表格為3欄，...就必須輸入3個英文字母，若因文字母中間加入$|$ ，則會在該2欄間加入線條。
+\newpage
+\subsection{基礎表格函數介紹} 
+\begin{enumerate}
+\item 表格呈現，見表\ref{show} \\
+\begin{table}[H]\caption{表格呈現}\label{show} 
+    \centering
+    \extrarowheight=5pt   %加高行高2pt
+{\begin{tabular}{lc}
+    \hline
+  $\backslash$hline  & 加入水平線條
+\\\hline  % &代表換欄 \\代表換下一列
+  $\backslash$extrarowheight=...pt  & 改變行高
+\\\hline\
+  $\backslash$colorbox$\{$顏色名稱$\}$ & 更改表格下方顏色  \\\hline
+    \end{tabular}}       
+    \end{table}
+\item 調整表格位置，見表\ref{site} \\  
+\begin{table}[H]\caption{調整表格位置}\label{site} 
+    \centering
+        %加入標題與標號參照的文字
+    \extrarowheight=5pt   %加高行高2pt
+{\begin{tabular}{lc}
+    \hline
+  $\backslash$begin$\{$table$\}$ $[$h$]$  & 建議表格在此  		\\\hline  % &代表換欄 \\代表換下一列
+  $\backslash$begin$\{$table$\}$ $[$H$]$  & 指定表格在此  		\\\hline
+  $\backslash$begin$\{$table$\}$ $[$t$]$  & 指定表格在上方  		\\\hline
+  $\backslash$begin$\{$table$\}$ $[$b$]$  & 指定表格在底部  		\\\hline
+  $\backslash$begin$\{$table$\}$ $[$ht$]$  & 建議表格在此\\
+   &若無法則指定表格在上方  		\\\hline
+    \end{tabular}}       
+\end{table}  
+\item 範例\\
+    \begin{table}[H]\caption{hline練習}\label{hline}
+    \centering
+    \extrarowheight=2pt
+    \begin{tabular}{l}
+    程式碼\\
+    \hline
+	$\backslash$begin$\{$tabular$\}$ $\{$ab$\}$ $\backslash\backslash$\\
+	\;0.05 \& 400$\backslash\backslash\backslash$hline\\
+	\;0.025 \& 1600$\backslash\backslash$\\
+	$\backslash$end$\{$tabular$\}$
+	$\backslash$end$\{$table$\}$	
+    \end{tabular}\hspace{10pt}
+    \begin{tabular}{lc}
+    \multicolumn{1}{c}{輸出結果}\\
+    \hline\\
+	\;0.05 & 400\\\hline
+	\;0.025 & 1600
+    \end{tabular}
+    \end{table}
+    \begin{table}[H]\caption{colorbox練習}\label{colorbox}
+    \centering
+    \extrarowheight=2pt
+    \begin{tabular}{l}
+    程式碼\\
+    \hline
+    $\backslash$begin$\{$table$\}$
+	$\backslash$colorbox$\{$slight$\}$\\
+	$\backslash$begin$\{$tabular$\}$ $\{$ab$\}$ $\backslash\backslash$\\
+	\;0.05 \& 400$\backslash\backslash$\\
+	\;0.025 \& 1600$\backslash\backslash$\\
+	$\backslash$end$\{$tabular$\}$
+	$\backslash$end$\{$table$\}$	
+    \end{tabular}\hspace{10pt}
+    \colorbox{slight}{
+    \begin{tabular}{lc}
+    \multicolumn{1}{c}{輸出結果}\\
+    \hline
+    \\
+	\;0.05 & 400\\
+	\;0.025 & 1600
+    \end{tabular}
+    }
+    \end{table}
+\end{enumerate}
+\subsection{欄寬}
+\begin{enumerate}
+\item 欄寬\\
+表格也是可以欄寬的，而\LaTeX 也有許多套建可以達到效果，這邊介紹使用{\A booktabs}套件的效果，在使用$\backslash$begin$\{$tabular$\}$後方加入$\{$lcp$\{$...cm$\}$ $\}$，便可以限制欄寬大小，而若輸入的內容有超過預定的欄寬，則程式也會自動將其移至下一行
+\item 範例\\
+\begin{table}[H]\caption{欄寬調整}\label{wide}
+    \centering
+    \extrarowheight=2pt
+    \begin{tabular}{l}
+    程式碼\\
+    \hline
+    $\backslash$begin$\{$tabular$\}$ $\{$ab$\}$ $\{$lcp$\{$4cm$\}$ $\}$\\
+    歌曲 \& Hymn for the Weekend $\backslash\backslash$\\
+    歌詞\& When I was down,\\
+    when I was hurt$\backslash\backslash$\\
+    副歌\& Now I'm feeling drunk so high\\
+    so high, so high$\backslash\backslash$\\\\  
+    \end{tabular}\hspace{10pt}
+   \begin{tabular}{cp{4cm}}
+    \multicolumn{2}{c}{輸出結果}\\
+	\hline\\
+	歌曲     & Hymn for the Weekend\\
+	歌詞     &  When I was down, when I was hurt\\
+	副歌     &  Now I'm feeling drunk so high, so high, so high\\ \\   
+   
+   \end{tabular} 
+\end{table}
+\end{enumerate}
+\subsection{表格內容輸入}
+\begin{enumerate}
+\item 表格內容輸入\\
+表格輸入內容的方式與矩陣類似，必須使用$\backslash$begin$\{$table$\}$，不論該欄位是否空白或有資訊，若需要前進至下一列，則必須使用"$\backslash\backslash$"符號進行換列的工作
+\item 範例\\
+\begin{table}[H]\caption{表格內容輸入}\label{input}
+    \centering
+    \extrarowheight=2pt
+    \begin{tabular}{l}
+    程式碼\\
+    \hline
+	$\backslash$begin$\{$tabular$\}$ $\{$ab$\}$ $\backslash\backslash$\\
+	\;d \& n\$$\backslash$ $\wedge$ast\$ =1\$ $\backslash$ slash \$ d\$$\wedge$ 2 \$$\backslash\backslash$\\
+	\;0.05 \& 400$\backslash\backslash$\\
+	\;0.025 \& 1600$\backslash\backslash$\\
+	\;0.02 \& 2500$\backslash\backslash$\\
+	\;0.01 \& 10000$\backslash\backslash$\\
+	$\backslash$end$\{$tabular$\}$
+    \end{tabular}\hspace{10pt}
+    \begin{tabular}{lc}
+    \multicolumn{1}{c}{輸出結果}\\
+    \hline
+    &\\
+    d & n$^\ast$ =1$\slash$d$^2$ \\
+	0.05 & 400\\
+	0.025 & 1600\\
+	0.02 & 2500\\
+	0.01 & 10000\\
+	&\\
+    \end{tabular}
+    
+\end{table}
+\end{enumerate}
+\subsection{兩表格合併呈現}
+\begin{enumerate}
+\item 兩表格合併呈現\\
+若要將兩表格合併呈現在左右，那我們僅需將兩個表格程式中間不要有任何的分行設定，輸入時也不要加入空格即可\\
+\item 範例\\
+\begin{table}[h]\caption{兩表格合併呈現}\label{combine}
+ \centering
+    \begin{tabular}{l}
+    程式碼\\
+    \hline
+	$\backslash$begin$\{$tabular$\}$ $\{$ab$\}$ $\backslash\backslash$\\
+	\;0.05 \& 400$\backslash\backslash$\\
+	$\backslash$end$\{$tabular$\}$\\
+		$\backslash$begin$\{$tabular$\}$ $\{$ab$\}$ $\backslash\backslash$\\
+	\;0.025 \& 1600$\backslash\backslash$\\
+	$\backslash$end$\{$tabular$\}$\\
+    \end{tabular}\hspace{10pt}
+    \end{table}
+ 
+    \begin{table}[h]
+    \extrarowheight=2pt
+     \centering
+    \begin{tabular}{lc}
+    \multicolumn{1}{c}{輸出結果}\\
+    \hline
+	0.05 & 400\\
+    \end{tabular}
+    \begin{tabular}{lc}
+    \multicolumn{1}{c}{輸出結果}\\
+    \hline
+	0.025 & 1600\\
+    \end{tabular}
+\end{table}
+\end{enumerate}
+\subsection{表格標號與表題}
+表格標題的過程中，要使用$\backslash$caption$\{$表格名稱$\}$，而在進行標號的過程，與方程式一樣，使用$\backslash$label$\{$...$\}$與$\backslash$ref 進行交互參照
+\subsection{多行列合併}
+\begin{enumerate}
+\item 多行列合併\\
+有時為了編輯上的需要，我們會將表格中的某幾行或列進行合併，這時我們就會需要用到{\A multicolumn}$\{$跨行數$\}$ $\{$對齊方式$\}$ $\{$內容$\}$與{\A multirow}$\{$跨列數$\}$ $\{$對齊方式$\}$ $\{$內容$\}$函數，其中，對齊方式可以輸入"c"，代表置中，或"*"符號代表自動調整，同時間，若要對合併的欄繪製框線，我們就需要用到{\A cline}$\{$跨哪些行$\}$程式，以下使用網路資源進行範例\footnote{https://www.cnblogs.com/machine/archive/2013/01/18/2866654.html}
+\item 範例\\
+\begin{table}[H]\caption{多行列合併}\label{mulit}
+\centering
+    \extrarowheight=2pt
+    \begin{tabular}{l}
+    程式碼\\
+    \hline
+	$\backslash$begin$\{$tabular$\}$ $\{$ $|$c$|$c$|$c$|$c$|$c$|$ $\}$ $\backslash\backslash$\\
+	$\backslash$ multirow$\{$2$\}$ $\{$*$\}$ $\{$Multi-Row$\}$ \& $\backslash\backslash$\\
+	$\backslash$ multicolumn$\{$2$\}$ $\{$c$|$ $\}$ $\{$Multi-Column$\}$ \& $\backslash\backslash$\\
+	$\backslash$ multicolumn$\{$2$\}$ $\{$c$|$ $\}$ $\{$ $\backslash$ multirow$\{$2$\}$ $\{$*$\}$ $\{$Multi-Row and Col$\}$ $\}$ $\backslash\backslash$\\
+	$\backslash$ cline$\{$2-3$\}$ \& column-1 \& column-2 \&$\backslash$ multicolumn$\{$2$\}$ $\{$c$|$ $\}$ $\backslash\backslash$\\
+	$\backslash$ hline$\backslash\backslash$\\
+	label-1 \& label-2 \& label-3 \& label-4 \& label-5$\backslash\backslash$\\
+	$\backslash$end$\{$tabular$\}$\\\\
+    \end{tabular}\hspace{20pt} 
+	\begin{tabular}{|c|c|c|c|c|}    
+	\multicolumn{1}{c}{輸出結果}\\
+	\hline
+	\multirow{2}{*}{Multi-Row} &
+	\multicolumn{2}{c|}{Multi-Column} &
+	\multicolumn{2}{c|}{\multirow{2}{*}{Multi-Row and Col}} \\
+	\cline{2-3}
+  & column-1 & column-2 & \multicolumn{2}{c|}{} \\
+	\hline
+label-1 & label-2 & label-3 & label-4 & label-5$\backslash\backslash$ \\
+	\hline
+\end{tabular}
+    
+\end{table}
+\end{enumerate}
+\subsection{表格轉向}
+\begin{enumerate}
+\item 表格轉向\\
+有時會因為篇幅的關係，我們需要將表格進行轉向或旋轉，這時，$\backslash$rotatebox就是我們不可或缺的助手，只要在$\backslash$begin$\{$table$\}$...$\backslash$begin$\{$tabular$\}$後方加入$\backslash$rotatebox$\{$旋轉角度$\}$另外，可以加上 $[$origin$]$進行位置的調整，其輸入方式與呈現效果如下：\\
+\begin{table}[H]\caption{origin輸入與呈現}\label{origin} 
+    \centering
+        %加入標題與標號參照的文字
+    \extrarowheight=5pt   %加高行高2pt
+{\begin{tabular}{lc}
+    \hline
+    輸入  & 呈現
+\\\hline  % &代表換欄 \\代表換下一列
+  r  & right
+\\\hline
+  c & center  \\\hline
+  t & top     \\\hline
+  b & bottom  \\\hline
+  B & baseline \\\hline
+    \end{tabular}}       
+    \end{table}
+\item 範例：將表\ref{input}旋轉90度與270度\\
+\begin{table}[H]\caption{旋轉表格}\label{rotate} 
+\centering
+    \rotatebox[origin=c]{90}{
+    \begin{tabular}{lc}
+    \hline
+    \\
+    d & n$^\ast$ =1$\slash$d$^2$ \\
+	0.05 & 400\\
+	0.025 & 1600\\
+	0.02 & 2500\\
+	0.01 & 10000\\
+	\\
+    \end{tabular}}
+        \rotatebox[origin=c]{270}{
+    \begin{tabular}{lc}
+    \hline
+    \\
+    d & n$^\ast$ =1$\slash$d$^2$ \\
+	0.05 & 400\\
+	0.025 & 1600\\
+	0.02 & 2500\\
+	0.01 & 10000\\
+	\\
+    \end{tabular}}
+\end{table}
+\end{enumerate}
+
+\section{跨頁表格} 
+\begin{enumerate}
+\item 跨頁表格\\
+有的時候我們會產生較大的表格，或許會需要進行跨頁表格的工作，這時，{\A longtable}函數就會成為最有利的利器，下方以網路範例呈現\footnote{https://reurl.cc/Z5obM}
+\item 範例\\
+\begin{center}
+\begin{longtable}{|l|l|l|}
+\caption[Feasible triples for a highly variable Grid]{Feasible triples for 
+highly variable Grid, MLMMH.} \label{grid_mlmmh} \\
+
+\hline \multicolumn{1}{|c|}{\textbf{Time (s)}} & \multicolumn{1}{c|}{\textbf{Triple chosen}} & \multicolumn{1}{c|}{\textbf{Other feasible triples}} \\ \hline 
+\endfirsthead
+
+\multicolumn{3}{c}%
+{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+\hline \multicolumn{1}{|c|}{\textbf{Time (s)}} &
+\multicolumn{1}{c|}{\textbf{Triple chosen}} &
+\multicolumn{1}{c|}{\textbf{Other feasible triples}} \\ \hline 
+\endhead
+
+\hline \multicolumn{3}{|r|}{{Continued on next page}} \\ \hline
+\endfoot
+
+\hline \hline
+\endlastfoot
+0 & (1, 11, 13725) & (1, 12, 10980), (1, 13, 8235), (2, 2, 0), (3, 1, 0) \\
+2745 & (1, 12, 10980) & (1, 13, 8235), (2, 2, 0), (2, 3, 0), (3, 1, 0) \\
+5490 & (1, 12, 13725) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+8235 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+10980 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+13725 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+16470 & (1, 13, 16470) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+19215 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+21960 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+24705 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+27450 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+30195 & (2, 2, 2745) & (2, 3, 0), (3, 1, 0) \\
+32940 & (1, 13, 16470) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+35685 & (1, 13, 13725) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+38430 & (1, 13, 10980) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+41175 & (1, 12, 13725) & (1, 13, 10980), (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+43920 & (1, 13, 10980) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+46665 & (2, 2, 2745) & (2, 3, 0), (3, 1, 0) \\
+49410 & (2, 2, 2745) & (2, 3, 0), (3, 1, 0) \\
+52155 & (1, 12, 16470) & (1, 13, 13725), (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+54900 & (1, 13, 13725) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+57645 & (1, 13, 13725) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+60390 & (1, 12, 13725) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+63135 & (1, 13, 16470) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+65880 & (1, 13, 16470) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+68625 & (2, 2, 2745) & (2, 3, 0), (3, 1, 0) \\
+71370 & (1, 13, 13725) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+74115 & (1, 12, 13725) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+76860 & (1, 13, 13725) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+79605 & (1, 13, 13725) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+82350 & (1, 12, 13725) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+85095 & (1, 12, 13725) & (1, 13, 10980), (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+87840 & (1, 13, 16470) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+90585 & (1, 13, 16470) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+93330 & (1, 13, 13725) & (2, 2, 2745), (2, 3, 0), (3, 1, 0) \\
+\end{longtable}
+\end{center}
+\end{enumerate}
+\section{從Excel 載入表格}
+\begin{enumerate}
+\item 從Excel 載入表格\\
+有時我們會需要從Excel將資料檔案匯出到\LaTeX 中，此時需要從相關網站下載相關的資源，以下使用CTAN Comprehensive TEX Archive Network網站\footnote{https://ctan.org/pkg/excel2latex}的資源進行描述
+\item 步驟\\
+\begin{enumerate}[a.]
+		\item 從網站上下載套件，並將檔案中Excal2Latex.xla檔案解壓縮
+		\item 在解壓縮的檔案中輸入想呈現的表格，可以更改顏色、框線與網底
+		\item 點選上方「增益集」中的「Convert Table To Latex」
+		\item 在彈出的視窗中點選「Copy to Clipboard」即可將期\LaTeX 程式碼複製
+		\item 將程式碼貼到\LaTeX 中
+		\item 結果會出現在文件中
+\end{enumerate}
+% Table generated by Excel2LaTeX from sheet '工作表1'
+\begin{table}[htbp][H]
+  \centering
+  
+    \begin{tabular}{|r|r|}
+    \toprule
+    1351  & 5341 \\
+    \midrule
+    \textcolor[rgb]{ 1,  0,  0}{135} & \textcolor[rgb]{ 1,  0,  0}{135} \\
+    \midrule
+    \textcolor[rgb]{ 1,  0,  0}{413515} & \textcolor[rgb]{ 1,  0,  0}{1135} \\
+    \midrule
+    1151351 & 135 \\
+    \midrule
+    \rowcolor[rgb]{ 1,  1,  0} 135151 & 135 \\
+    \bottomrule
+    \end{tabular}\caption{Excel表格轉換到\LaTeX}
+  \label{tab:addlabel}%
+\end{table}%
+\end{enumerate}
+\section*{小結}
+表格置作的過程中，是我在這一本書中花第二多力氣的，因為常常會遇到套件間衝突的問題，這同時也代表著，表格的變化其實是很多的，網路也可以搜尋到很多不同的資源，但套件間的相容與否還是因人而異。
+\chapter{圖片}
+圖表的呈現也是資料分析中重要的一環，我們常常會藉由不同的統計圖讓讀者能更加清楚我們的表達，而圖片的呈現其實不難，且可以輕易解決不同圖檔類型之間匯入的差異，讓我們一起來看看吧。
+\section{輸入圖片}
+\begin{enumerate}
+\item 基礎圖片輸入
+\begin{enumerate}
+\item 基礎圖片輸入\\
+輸入圖片的過程中，$\backslash$includegraphics$\{$圖片路徑$\}$昰一個不可或缺的幫手，而當中的{\A scale}函數可以調整圖片大小，另外，通常我們會將圖片統一放置在一個資料夾中，這時可以在preamble設立圖片資料夾的路徑$\backslash$newcommand$\{$ $\backslash$imgdir$\}$ $\{$images$\slash$ $\}$
+\item 範例：\\
+\begin{table}[H]
+\centering
+    \extrarowheight=2pt
+    \begin{tabular}{l}
+    程式碼\\
+    \hline
+	$\backslash$includegraphics$[$scale=1.5$]$ $\{$ $\backslash$imgdir$\{$Expon.jpg$\}$ $\}$\\
+    \end{tabular}\hspace{10pt}
+    \end{table}
+    \begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.5]{\imgdir{Expon.jpg}}
+    \caption{基礎圖片輸入}\label{fig:input}
+    \end{figure}
+\end{enumerate}
+
+\item 圖片併排
+\begin{enumerate}
+\item 圖片併排\\
+圖片併排的呈現方式不僅可以減少版面的空間，也可以在具有比較性質的圖形上更能彰顯其不同之處，主要的程式碼會是$\backslash$begin$\{$figure$\}$ $\backslash$subfloat$[$圖名$]$，使用{\A includegraphics}函數由左至右，並可以使用$\backslash\backslash$將圖片放入下一行中
+\item 範例\\
+\begin{table}[H]
+\centering
+    \extrarowheight=2pt
+    \begin{tabular}{l}
+    程式碼\\
+    \hline
+    $\backslash$begin$\{$figure$\}$\\
+    $\backslash$subfloat$[$jpg檔$]$ $\{$ $\backslash$includegraphics$[$scale=0.2$]$ $\{$ $\backslash$imgdir$\{$rainbow.jpg$\}$ $\}$\\
+    $\backslash$subfloat$[$png檔$]$ $\{$ $\backslash$includegraphics$[$scale=0.15$]$ $\{$ $\backslash$imgdir$\{$cat.png$\}$ $\}$ $\backslash\backslash$\\
+    $\backslash$subfloat$[$bmp檔$]$ $\{$ $\backslash$includegraphics$[$scale=0.2$]$ $\{$ $\backslash$imgdir$\{$villa.bmp$\}$ $\}$ \\
+    \end{tabular}\hspace{10pt}
+\end{table}
+\begin{figure}[H]
+  \centering
+  \subfloat[jpg檔]{\includegraphics[scale=0.2]{\imgdir{rainbow.jpg}}}
+  \subfloat[png檔]{\includegraphics[scale=0.15]{\imgdir{cat.png}}}\\
+  \subfloat[bmp檔]{\includegraphics[scale=0.2]{\imgdir{villa.bmp}}}
+  \caption{圖片併排}\label{fig:gather}
+\end{figure}
+\end{enumerate}
+\item 圖片旋轉
+\begin{enumerate}
+\item 圖片旋轉\\
+圖片旋轉的功能雖然不常用到，但有時難免會遇到圖片檔必須要進行旋轉的窘境，其實很簡單，僅須在$\backslash$includegraphics後方的$[$...$]$中輸入angle=旋轉角度即可，以下以圖\ref{fig:input}旋轉30度作為範例
+\item 範例\\
+\begin{table}[H]
+    \extrarowheight=2pt
+\centering
+    \begin{tabular}{l}
+    程式碼\\
+    \hline
+    $\backslash$begin$\{$figure$\}$\\
+    $\backslash$includegraphics$[$scale=1.5, angle=30$]$ $\{$ $\backslash$imgdir$\{$Expon.jpg$\}$ $\}$\\
+    \end{tabular}\hspace{10pt}
+    \end{table}
+    \begin{figure}[H]
+    \centering
+    \includegraphics[scale=1.5, angle=30]{\imgdir{Expon.jpg}}
+    \caption{圖片旋轉30度}\label{fig:rotate}
+    \end{figure}
+\end{enumerate}
+\item 圖片在文字內
+\begin{enumerate}
+\item 圖片在文字內\\
+有時我們會需要將圖片鑲嵌在文字中，wrapfig套件便可以簡單的操作，僅需在輸入文字前使用$\backslash$begin$\{$wrapfigure$\}$ $\{$圖片位置$\}$，並加入$\backslash$includegraphics函數即可
+\item 圖片位置設定\\
+\begin{table}[h]\caption{圖片位置設定}\label{fig:site} 
+    \centering
+        %加入標題與標號參照的文字
+    \extrarowheight=5pt   %加高行高2pt
+{\begin{tabular}{lc}
+    \hline
+ r  & 建議將圖放置文字右邊  		\\\hline  
+ R & 要求將圖放置文字右邊    		\\\hline
+ l  & 建議將圖放置文字左邊  		\\\hline  % &代表換欄 \\代表換下一列
+ L & 要求將圖放置文字左邊 
+    \end{tabular}}       
+\end{table} 
+\item 範例(將圖放在文字右邊)\\
+\end{enumerate}
+\end{enumerate}
+\begin{wrapfigure}{R}{0.4\textwidth}
+\centering
+\includegraphics[scale=0.7]{\imgdir{martijn.png}}
+\caption{將圖放在文字右邊}
+\end{wrapfigure}
+
+馬汀·蓋瑞克斯（Martin Garrix），是一名荷蘭的DJ和音樂製作人。《Animals》為其出道之作，在十幾個國家登上前十名的排行，更在比利時和英國登上冠軍，而在愛爾蘭則為第三名。和Jay Hardway於2014合作的單曲《Wizard》在各國表現也十分亮眼。現今以《Scared To Be Lonely》,《Animals》 和《In the Name of Love》這三首歌最廣為人知。2013年在DJ雜誌首次登上百大DJ第40名，2014年則為第4名。他的恩師Tiësto認為馬汀·蓋瑞克斯是Ultra音樂派對2015第1名的DJ。馬汀•蓋瑞克斯曾說過Calvin Harris是他的夢想導師。使他在2015年成為世界百大DJ第3位，是他首次登上世界百大DJ前3位，2016年他以20歲零157天成為DJ雜誌的世界百大DJ第1名，2017年再度獲得此殊，2018年第三度獲得百大DJ第一名。他的YouTube頻道達到1350萬訂閱(截於2020/05/23日)。在2019年12月被歐洲國家盃選為官方音樂製作人，並發表2021年的官方代言歌曲。
+
+\section*{小結}
+圖片輸入到文件中的方式簡單，但相較Microsoft系列在編排時同時變更圖框與剪裁等功能，就顯得相對不方便，但是若只是數學文件上的編排，圖片的表現方式相對簡單，好像也不會是大問題，但若有需要對圖片進行較多修正且又有數學函數的編輯，選擇Microsoft系列或\LaTeX 就見仁見智了。
+
+\chapter{計數器}
+在進行統計文體書寫時，我們會分別去講述不同的定理或範例，此時，對不同標籤的計數器就十分常見，讓我們一次看個夠吧！
+\section{計數器步驟}
+\begin{enumerate}[1.]
+\item
+在使用計數器之前，需要先定義新的$\backslash$newtheorem$\{$代號$\}$ $\{$呈現名稱$\}$ $[...]$ 其中，...中若輸入section，代表獨立編號，若輸入已有的計數器代號，則代表與該計數器一同進行編號，例如我定義一個名為「定理」的計數器，代號為「th」並獨立編號，同時，我也定義一個名為「Lemma」的計數器，代號為「le」並與「定理計數器」一同進行編號\\
+\begin{center}
+$\backslash$newtheorem$\{$th$\}$ $\{$定理$\}$ $[$section$]$\\
+$\backslash$newtheorem$\{$le$\}$ $\{$Lemma$\}$ $[$th$]$\\
+\end{center}
+\item 
+在需要計數器的地方，使用$\backslash$begin$\{$代號$\}$便可以開始進行編輯，如有需要，可以再使用$[$ $]$輸入該定理等名稱
+\end{enumerate}
+\section{計數器練習}
+\begin{try}練習一\\
+\begin{df} a hypothesis is a statement aboit a population parameter.
+\end{df} 
+The definition of a hypothesis is rather general, but the important point is that a hypothesis makes a statement about the population. The goal of a hypothesis test is to decide, based on a sample from the population, which of two complementary hypothesis is true.
+\end{try} 
+\begin{try}練習二\\
+\begin{thm}[Karlin-Rubin] \;\;Consider testing $H_0:\theta\leq\theta_0$ versus $H_1:\theta>\theta_0$. Suppose that T is a sufficient statistic for $\theta$ and the family of pdfs or pmfs $\{g(t|\theta):\theta\in\Theta\}$ of T has an MLR. Then for any $t_0$, the test that rejects $H_0$ of and only if $T > t_0$ is a UMP level $\alpha$ test, where $\alpha=P_{\theta_0}(T>t_0$).
+\end{thm} 
+\end{try}
+\begin{try}練習三\\
+\begin{lemma} \;\;Let $\alpha_\gamma$ be the size of the test of $H_{0_\gamma}$ with rejection region $R_\gamma$. Then the IUT with rejection region R=$\bigcap_{\gamma\in\Gamma}$ $R_\gamma$ is a level $\alpha=sup_{\gamma\in\Gamma}$ $\alpha_\gamma$ test.
+\end{lemma} 
+\end{try}
+\section*{小結}
+使用計數器可以幫文章不同主題進行編號，雖在論文中比較沒有看到，但應該所有關於數學的教科書都是由一堆計數器構成的。
+\chapter{參考文獻引用}
+進行論文或是報告編輯時，我們會常常使用參考文獻，然而，不同的期刊雜誌所要求的編輯方式多有出入，因此以下由淺入深介紹幾種不同的編排文獻方式，便皆以下文做為範例。\\
+
+由Kalbfleisch及Prentice(1980)提出另一個信賴區間
+\begin{description}
+\item Prentice, Ross L., and John D. Kalbfleisch. "Hazard rate models with covariates." 
+Biometrics (1979): 25-39.
+\end{description}
+\section{直接輸入法}
+\begin{enumerate}
+\item 說明\\
+直接輸入法顧名思義便是直接將引用的文獻打入文章中，在參考文獻的部分使用$\backslash$begin $\{$description$\}$的方式，結合$\backslash$item進行說明，此方法簡單明瞭，但是當遇到不同要求時，就要有所調整，略為麻煩
+\item 範例程式碼\\
+
+由Kalbfleisch及Prentice(1980)提出另一個信賴區間\\
+$\backslash$begin$\{$description$\}$\\
+$\backslash$item Prentice, Ross L., and John D. Kalbfleisch. "Hazard rate models with covariates." Biometrics (1979): 25-39.\\
+$\backslash$end$\{$description$\}$\\
+%\item 輸出結果\\
+
+%由Kalbfleisch及Prentice(1980)提出另一個信賴區間
+%\begin{description}
+%\item Prentice, Ross L., and John D. Kalbfleisch. "Hazard rate models with covariates." Biometrics (1979): 25-39.
+%\end{description}
+\end{enumerate}
+\section{thebibliography套件}
+\begin{enumerate}
+\item 說明\\
+使用thebibliography套件昰用$\backslash$bibitem先將文獻整理置文章後方並給予其代號，有需要進行引用時再使用$\backslash$cite$\{$代號$\}$，同樣的，當遇到不同要求時，就要有所調整，略為麻煩\\
+\item 程式碼說明\\
+\begin{enumerate}[1.]
+\item thebibliography程式碼：\\
+$\backslash$begin$\{$thebibliography$\}$ $\{$最多幾個文獻$\}$\\
+$\backslash$bibitem$\{$文獻代號$\}$\\
+輸入文現內容...
+$\backslash$end$\{$thebibliography$\}$
+\item cite程式碼：\\
+$\backslash$cite$\{$文獻代號$\}$\\
+\end{enumerate}
+\item 範例程式碼\\
+
+由$\backslash$cite$\{$kp:1979$\}$提出另一個信賴區間\\
+$\backslash$begin$\{$thebibliography$\}$ $\{$1$\}$\\
+$\backslash$bibitem$\{$kp:1979$\}$\\
+Prentice, Ross L., and John D. Kalbfleisch. "Hazard rate models with covariates." Biometrics (1979): 25-39.\\
+%\item 輸出結果\\
+%由Kalbfleisch及Prentice\cite{kp:1979}提出另一個信賴區間\\
+%\begin{thebibliography} {1}
+%\bibitem{kp:1979}
+%Prentice, Ross L., and John D. Kalbfleisch. "Hazard rate models with covariates." Biometrics (1979): 25-39.
+%\end{thebibliography}
+\end{enumerate}
+\section{bibliographystyle套件}
+\begin{enumerate}
+\item 說明\\
+使用bibliographystyle套件昰先文獻整理至BibTeX檔中，再使用$\backslash$bibliography$\{$bib檔名$\}$將文獻資料匯入\LaTeX 中，再使用$\backslash$cite$\{$代號$\}$進行引用，此方法可依照不同的期刊格式而自動調整文現的呈現方式，只需要$\backslash$bibliographystyle$\{$內建期刊代號$\}$即可\\
+\item 程式碼說明\\
+\begin{enumerate}[label=1.]
+\item BibTeX程式碼：\\
+$@$article$\{$文獻代號,\\
+  author = $\{$作者$\}$,\\
+  title = $\{$文獻名稱$\}$,\\
+  journal = $\{$期刊名稱$\}$,\\
+  year = $\{$出版年$\}$,\\
+  volume = $\{$期刊期數$\}$,\\
+  pages = $\{$文獻頁碼$\}$ \\
+$\}$\\
+\item cite程式碼：\\
+$\backslash$cite$\{$文獻代號$\}$\\
+
+\end{enumerate}
+\item 範例程式碼：以amsplain格式舉例\\
+
+由$\backslash$cite$\{$KP$\}$提出另一個信賴區間\\
+$\backslash$bibliographystyle$\{$plain$\}$\\
+$\backslash$bibliography$\{$chen$\}$
+
+%\item 輸出結果\\
+%
+%由Kalbfleisch及Prentice\cite{KP}提出另一個信賴區間\\
+%%\nocite{*}
+%%\bibliographystyle{amsplain}
+%%\bibliography{cheng}
+
+%\bibliographystyle{plain}
+
+\end{enumerate}
+\section*{小結}
+參考文獻的引用是很重要的，如果要躲掉所有智慧財產權的糾紛，就一定要學好，不過這也是我花最多時間的部分，因為不同引用方法的套件也是會跟其他套件有可能衝突到，這也是未來在使用上需要特別留意的。
+
+%
+%\end{document}

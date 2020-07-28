@@ -1,0 +1,158 @@
+% !TEX TS-program = xelatex								% These two lines must be incldued to open file under UTF-8
+% !TEX encoding = UTF-8
+
+%--- BOOK 定義檔
+\documentclass[12pt, a4paper]{book}
+\setlength{\textwidth}{13cm} %設定書面文字寬度
+
+%--- 定義頁眉頁足 -------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\chaptermark}[1]{\markboth{Chapter\thechapter .\ #1}{}} %去除章編號前後的字
+\fancyhead[LE]{ \XeLaTeX }
+\fancyhead[RO]{  \leftmark  }
+\fancyfoot[RO,LE]{第~\thepage ~頁}
+\renewcommand{\headrulewidth}{0.2pt} %頁眉下方的橫線
+\renewcommand{\footrulewidth}{0.2pt} %頁眉下方的橫線
+%----- 定義使用的 packages ----------------------
+\usepackage{fontspec} 										% Font selection for XeLaTeX; see fontspec.pdf for documentation. 
+%\usepackage[BoldFont, SlantFont]{xeCJK}		% 中文使用 XeCJK，並模擬粗體與斜體（即可以用 \textbf{ } \textit{ }）
+\usepackage{xeCJK}											% 中文使用 XeCJK，但利用 \setCJKmainfont 定義粗體與斜體的字型
+\defaultfontfeatures{Mapping=tex-text} 				% to support TeX conventions like ``---''
+\usepackage{xunicode} 										% Unicode support for LaTeX character names (accents, European chars, etc)
+\usepackage{xltxtra} 											% Extra customizations for XeLaTeX
+\usepackage{amsmath, amssymb}
+\usepackage[sf,small]{titlesec}
+\usepackage{enumerate}
+\usepackage{graphicx, subfig, float} 					% support the \includegraphics command and options
+\usepackage{array, booktabs}
+\usepackage{color, xcolor}
+\usepackage{longtable}
+\usepackage{colortbl}     
+\usepackage{multirow} 
+\usepackage{multicol} 
+\usepackage{arydshln}  
+\usepackage{dcolumn} 
+\usepackage{rotating} 
+\usepackage{diagbox} 
+\usepackage{wrapfig} %文繞圖
+\usepackage{overpic}%圖片上加文字
+%\usepackage{natbib}
+%\usepackage[sort&compress,square,comma,authoryear]{natbib}
+%.............................................表格標題註解之巨集套件
+% for Reference
+\usepackage{makeidx}										% for Indexing
+\usepackage[parfill]{parskip} 							% Activate to begin paragraphs with an empty line rather than an indent
+%\usepackage{geometry} 									% See geometry.pdf to learn the layout options. There are lots.
+%\usepackage[left=1.5in,right=1in,top=1in,bottom=1in]{geometry} 
+%-----------------------------------------------------------------------------------------------------------------------
+\setCJKmainfont
+[
+%	BoldFont=cwTeX Q Hei Bold								% 定義粗體的字型（依使用的電腦安裝的字型而定）
+]
+%	{cwTeX Q Ming Medium} 										% 設定中文內文字型
+{新細明體}	
+\setmainfont{Times New Roman}								% 設定英文內文字型
+\setsansfont{Arial}														% used with {\sffamily ...}
+%\setsansfont[Scale=MatchLowercase,Mapping=tex-text]{Gill Sans}
+\setmonofont{Courier New}										% used with {\ttfamily ...}
+%\setmonofont[Scale=MatchLowercase]{Andale Mono}
+% 其他字型（隨使用的電腦安裝的字型不同，用註解的方式調整（打開或關閉））
+% 英文字型
+\newfontfamily{\ST}{StencilStd}	
+\newfontfamily{\E}{Cambria}										% 套用在內文中所有的英文字母
+\newfontfamily{\A}{Arial}
+\newfontfamily{\C}[Scale=0.9]{Cambria}
+\newfontfamily{\TT}[Scale=0.8]{Times New Roman}
+% 中文字型
+\newCJKfontfamily{\MB}{微軟正黑體}							% 適用在 Mac 與 Win
+\newCJKfontfamily{\SM}[Scale=0.8]{新細明體}				% 縮小版新細明體
+\newCJKfontfamily{\K}{標楷體}  
+
+% 以下為自行安裝的字型：CwTex 組合
+\newCJKfontfamily{\CF}{cwTeX Q Fangsong Medium}	% CwTex 仿宋體
+%\newCJKfontfamily{\CB}{cwTeX Q Hei Bold}			% CwTex 粗黑體
+\newCJKfontfamily{\CK}{cwTeX Q Kai Medium}   		% CwTex 楷體
+\newCJKfontfamily{\CM}{cwTeX Q Ming Medium}		% CwTex 明體
+\newCJKfontfamily{\CR}{cwTeX Q Yuan Medium}		% CwTex 圓體                      			% Windows 下的標楷體
+%-----------------------------------------------------------------------------------------------------------------------
+\XeTeXlinebreaklocale "zh"                  %這兩行一定要加，中文才能自動換行
+\XeTeXlinebreakskip = 0pt plus 1pt     %這兩行一定要加，中文才能自動換行
+%-----------------------------------------------------------------------------------------------------------------------
+%----- 重新定義的指令 ---------------------------
+\newcommand{\cw}{\texttt{cw}\kern-.6pt\TeX}	% 這是 cwTex 的 logo 文字
+\newcommand{\imgdir}{images/}						% 設定圖檔的位置
+\renewcommand{\tablename}{表}						% 改變表格標號文字為中文的「表」（預設為 Table）
+\renewcommand{\figurename}{圖}						% 改變圖片標號文字為中文的「圖」（預設為 Figure）
+%\renewcommand{\figurename}{圖\hspace*{-.5mm}}
+%  for Long Report or Book
+\renewcommand{\contentsname}{{\CB 目錄}}
+\renewcommand\listfigurename{{\CB 圖目錄}}
+\renewcommand\listtablename{{\CB 表目錄}}
+\renewcommand{\indexname}{{\CB 索引}}
+\renewcommand{\bibname}{{\CB 參考文獻}}
+%-----------------------------------------------------------------------------------------------------------------------
+
+%\theoremstyle{plain}
+\newtheorem{de}{Definition}[section]				%definition獨立編號
+\newtheorem{thm}{{\MB 定理}}[section]			%theorem 獨立編號，取中文名稱並給予不同字型
+\newtheorem{lemma}[thm]{Lemma}				%lemma 與 theorem 共用編號
+\newtheorem{ex}{{\E Example}}						%example 獨立編號，不編入小節數字，走流水號。也換個字型。
+\newtheorem{cor}{Corollary}[section]				%not used here
+\newtheorem{exercise}{EXERCISE}					%not used here
+\newtheorem{re}{\emph{Result}}[section]		%not used here
+\newtheorem{axiom}{AXIOM}							%not used here
+%\renewcommand{\proofname}{\bf{Proof}}		%not used here
+
+\newcommand{\loflabel}{圖} % 圖目錄出現 圖 x.x 的「圖」字
+\newcommand{\lotlabel}{表}  % 表目錄出現 表 x.x 的「表」字
+
+\parindent=0pt
+\setcounter{tocdepth}{0}
+
+%--- 其他定義 ----------------------------------
+% 定義章節標題的字型、大小
+\titleformat{\chapter}[display]{\centering\LARGE\MB}
+{\CB 第\ \thechapter\ 章}{0.2cm}{}
+\titlespacing{\chapter}{0cm}{-1.3cm}{1em}
+%\titleformat{\chapter}[hang]{\centering\LARGE\sf}{\MB 第~\thesection~章}{0.2cm}{}%控制章的字體
+\titleformat{\section}[hang]{\Large\sf}{\MB 第~\thesection~節}{0.2cm}{}%控制章的字體
+%\titleformat{\subsection}[hang]{\centering\Large\sf}{\MB 第~\thesubsection~節}{0.2cm}{}%控制節的字體
+%\titleformat*{\section}{\normalfont\Large\bfseries\MB}
+\titleformat*{\subsection}{\normalfont\large\bfseries\MB}
+%\titleformat*{\subsubsection}{\normalfont\large\bfseries\MB}
+\usepackage{titlesec}
+\usepackage{titletoc}
+
+%目錄裡的 "章"文字
+\titlecontents{chapter}[1em]{}{\makebox[4.1em][l]
+	{\CB{第}\ST{\thecontentslabel}\CB{章}}}{}{~\titlerule*[0.7pc]{.}~\contentspage}
+
+
+
+\definecolor{slight2}{gray}{0.5}	
+\definecolor{slight}{gray}{0.8}								% 設定顏色
+\definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66} % color Table: http://latexcolor.com
+\definecolor{arylideyellow}{rgb}{0.91, 0.84, 0.42}
+\definecolor{babyblue}{rgb}{0.54, 0.81, 0.94}
+\definecolor{cadmiumred}{rgb}{0.89, 0.0, 0.13}
+\definecolor{coolblack}{rgb}{0.0, 0.18, 0.39}
+\definecolor{cottoncandy}{rgb}{1.0, 0.74, 0.85}
+\definecolor{desertsand}{rgb}{0.93, 0.79, 0.69}
+\definecolor{electriclavender}{rgb}{0.96, 0.73, 1.0}
+\definecolor{lightsalmonpink}{rgb}{1.0, 0.6, 0.6}
+\definecolor{amaranth}{rgb}{0.9, 0.17, 0.31}
+\definecolor{amethyst}{rgb}{0.6, 0.4, 0.8}
+\definecolor{atomictangerine}{rgb}{1.0, 0.6, 0.4}
+\definecolor{babyblueeyes}{rgb}{0.63, 0.79, 0.95}
+\definecolor{gray(x11gray)}{rgb}{0.75, 0.75, 0.75}
+\definecolor{bananamania}{rgb}{0.98, 0.91, 0.71}	
+\definecolor{ballblue}{rgb}{0.13, 0.67, 0.8}
+\definecolor{azure(colorwheel)}{rgb}{0.0, 0.5, 1.0}	
+\definecolor{ceruleanblue}{rgb}{0.16, 0.32, 0.75}
+\definecolor{lightsalmonpink}{rgb}{1.0, 0.6, 0.6}
+\definecolor{palepink}{rgb}{0.98, 0.85, 0.87}
+\definecolor{lightcarminepink}{rgb}{0.9, 0.4, 0.38}
+\definecolor{lightcornflowerblue}{rgb}{0.6, 0.81, 0.93}
+\definecolor{carolinablue}{rgb}{0.6, 0.73, 0.89}

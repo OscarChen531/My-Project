@@ -1,0 +1,295 @@
+%\input{preamble_CJK}   % 使用自己維護的定義檔
+%%-----------------------------------------------------------------------------------------------------------------------
+%% 文章開始
+%\title{\LaTeX{\MB 的數學符號與方程式}}
+%\author{{\SM 陳威傑}}
+%\date{{\TT \today}} 	% Activate to display a given date or no date (if empty),
+%         						% otherwise the current date is printed 
+%\begin{document}
+%\maketitle
+\fontsize{12}{22 pt}\selectfont
+\chapter{數學函式}
+\LaTeX 被人津津樂道的就是他對於數學函數的編排方式，雖然看起來一堆程式，也有一堆原則必須遵守，但最後編排出來的美感就是他最獨一無二的地方，也因為是經由編寫程式的方式進行，就像很多程式語言一樣，最一開始總是最痛苦的，但只要跟著本章節的編排順序一步一步慢慢來，就可以由淺入深的進入\LaTeX 的世界中。
+\section{{輸入數學函式}}
+輸入數學函式的方式大致可以分為以下兩種：
+\begin{enumerate}
+\item 在文字中間\\
+通常在文字中使用兩個 "\$"符號將數學式包含其中，像是若我輸入 \$2x+5\$即會出現 $2x+5$
+\item 獨立一行\\
+若需要讓函數獨立一行，則會在函數前後使用 "\$\$"將函數包圍起來，若我輸入\$\$2x+5\$\$，則畫面便會出現$$2x+5$$\\亦可以使用下列方法達到讓函數獨立一行的目的
+\begin{center}
+$\backslash$begin$\{$equation$\}$ ... $\backslash$end$\{$equation$\}$\\
+$\backslash$begin$\{$displaymath$\}$ ... $\backslash$end$\{$displaymath$\}$\\
+$\backslash$[ ... $\backslash$]\\
+        \end{center}
+\end{enumerate}
+\section{{數學函式對齊}}
+輸入函式之後，\LaTeX 也有內建的指令可以對函數的對齊方式進行調整
+\begin{enumerate}
+\item 使用align指令\\
+使用指令$\{$align$\}$來進行函數對齊時，在要對齊的地方加入\& 即可讓函數對齊，例如我輸入：
+$\backslash$ begin $\{$align$\}$ a \&=b+c $\backslash$ $\backslash$d\& =e+f $\backslash$ end $\{$ align $\}$\\
+便會將兩函數的"="進行對齊\begin{align} a &=b+c\notag\\ d &=e+f+g+h\notag 
+\end{align}
+\item 使用eqnarray指令\\
+使用指令$\{$eqnarray$\}$來進行函數對齊時，在要對齊的地方前後各加入"\&" 即可讓函數對齊，例如我輸入：\\
+$\backslash$begin $\{$eqnarray$\}$a \&=\& b+c$\backslash\backslash$d=e+f+g+h+i+j$\backslash$end$\{$eqnarray$\}$\\
+便會將兩函數的"="進行對齊\begin{eqnarray}a&=&b+c\nonumber\\d&=&e+f+g+h+i+j\nonumber
+\end{eqnarray}
+\item 使用gather指令\\
+使用指令$\{$gather$\}$可讓兩組數學函數居中對齊，例如我輸入：\\
+$\backslash$ begin $\{$gather$\}$ a=b+c$\backslash\backslash$d=e+f$\backslash$ end $\{$gather$\}$ $\backslash$\\
+便會在下一行出現\begin{gather}
+a=b+c\notag \\ d=e+f+i+j\notag 
+\end{gather}
+\end{enumerate}
+
+\section{{數學式中的文字}}
+\LaTeX 在進行文字與數學符號交錯邊排的時候，需要特別注意文字的表現，通常在數學函式中的文字會以斜體呈現，此時，僅需在函數結尾的"\$"或"\$\$"符號之前輸入即可，如：\$\$x+5\;, where  x $\backslash$leq 2\$\$，即會顯現$$x+5, where \; x \leq 2$$\\
+但若不要讓文字產生斜體效果，則需要使用$\backslash$mbox$\{$...$\}$的方式，在$\{...\}$中輸入文字，如\$\$x+5\;$\backslash$mbox$\{$, where$\}$  x $\backslash$leq 2\$\$，即會出現$$x+5 \mbox{, where} \; x \leq 2$$\\
+
+\section{{符號使用}}
+符號的使用在\LaTeX 中可以說是一個非常重要的學問，因為這些符號的使用在\LaTeX 多半有自己的定位，而不是將該符號程現在文字編排中，也有些特殊的數學符號需要特殊的輸入才能呈現
+\subsection{括號}
+\begin{enumerate}
+\item \textcolor{bole}{小括號}\\
+在呈現小括號時，不能僅打 $(...)$符號，而是需要像數學函數一樣，輸入\$$(...)$\$才可以顯示出來\\
+\item \textcolor{bole}{中括號}\\
+在呈現中括號時，不能僅打 $[...]$符號，而是需要像數學函數一樣，輸入\$$[...]$\$才可以顯示出來\\
+\item \textcolor{bole}{大括號}\\
+在呈現大括號時，不能僅打 $\{...\}$符號，而是需要像數學函數一樣，輸入\$${...}$\$才可以顯示出來\\
+\item \textcolor{bole}{上括號}\\
+在呈現上括號時，需要輸入$\backslash$overbrace$\{...\}$才可以在字串上顯示上括號\\
+\item \textcolor{bole}{下括號}\\
+在呈現下括號時，需要輸入$\backslash$underbrace$\{...\}$才可以在字串下顯示括號\\
+\end{enumerate}
+\subsection{分數與組合符號}
+\subsubsection{分數}
+\begin{enumerate}
+\item 分數的函數公式：\\
+\begin{center}
+$\backslash$ frac $\{$ 分子$\}$ $\{$ 分母$\}$
+\end{center}
+\item 範例：\\
+我輸入\$\$$\backslash$ frac $\{$ 2$\}$ $\{$ 7$\}$\$\$，便會在下一行出現$$\frac{2}{7}$$
+\item 練習：\\
+輸入 $\beta$ $(a, b)$
+\begin{equation} \label{frac2}
+\frac{(a-1)!(b-1)!}{(a+b-1)!}
+\end{equation}
+
+\end{enumerate}
+
+\subsubsection{組合符號}
+\begin{enumerate}
+\item 組合符號的函數公式：\\
+\begin{center}
+$\{$ $($總數$)$ $\backslash$ choose $($取的個數$)$ $\}$
+\end{center}
+\item 範例：\\
+我輸入\$\$$\{$ $($n$)$ $\backslash$ choose $($x$)$ $\}$\$\$，便會在下一行出現$$ {n\choose x}$$
+\item 練習：\\
+輸入超幾何分配 $f(k;n,K,N)$
+\begin{center}\label{frac3}
+$$\frac{{K\choose k}{N-K\choose n-k}}{{N\choose n}}$$
+\end{center}
+\end{enumerate}
+\subsection{積分與極限}
+\subsubsection{積分}
+\begin{enumerate}
+\item 積分符號的函數公式：\\
+\begin{center}
+$\backslash$ int\textunderscore  $\{$ 積分下界$\}$  \textasciicircum $\{$ 積分上界$\}$
+\end{center}
+\item 範例：\\
+我輸入\$\$$\backslash$ int\textunderscore  $\{$ -2$\}$  \textasciicircum $\{$ 1$\}$ f(x)dx\$\$，便會在下一行出現$$\int_{-2}^{1}f(x)dx$$
+\item 練習：\\
+輸入累積常態機率密度函數 $F(x), x\sim N(\mu, \sigma^2)$
+\begin{equation}\label{int1}
+\int_{-\infty}^{x}\frac{1}{\sqrt{2\pi}\sigma}e^\frac{(t-\mu)^2}{2\sigma^2}dt
+\end{equation}
+
+\end{enumerate}
+\subsubsection{極限}
+\begin{enumerate}
+\item 極限符號的函數公式：\\
+\begin{center}
+$\backslash$lim\textunderscore$\{$取極限的參數$\backslash$rightarrow 參數極限逼近值$\}$ $\backslash$\;(方程式)
+\end{center}
+\item 範例：\\
+我輸入\$\$$\backslash$lim\textunderscore$\{$x$\backslash$rightarrow 2$\}$ $\backslash$\;(x+2)\$\$，便會在下一行出現$$\lim_{x\rightarrow 2} x+2$$
+\item 練習：\\
+輸入機率收歛公式 $X_{n}\stackrel{p}{\longrightarrow} X $
+\begin{equation}\label{int2}
+\lim_{n\rightarrow \infty} (\mathbb{P}(|X-X_{n}|\geq\varepsilon)=0) 
+\end{equation}
+\end{enumerate}
+\subsection{累加與累乘}
+\subsubsection{累加}
+\begin{enumerate}
+\item 累加符號的函數公式：\\
+\begin{center}
+$\backslash$ sum\textunderscore  $\{$ 累加下界$\}$  \textasciicircum $\{$ 累加上界$\}$
+\end{center}
+\item 範例：\\
+我輸入\$\$$\backslash$ sum\textunderscore  $\{$x=2$\}$  \textasciicircum $\{$5$\}$2x+1\$\$，便會在下一行出現$$\sum_  {x=2}^{5}2x+1$$
+\item 練習：\\
+輸入累積間斷函數期望值公式E(x), $x=1,2,\cdots n$
+\begin{equation}\label{sum1}
+\sum_{x=1}^{n}xf(x)
+\end{equation}
+\end{enumerate}
+\newpage
+\subsubsection{累乘} 
+\begin{enumerate}
+\item 累乘符號的函數公式：\\
+\begin{center}
+$\backslash$ prod\textunderscore  $\{$累乘下界$\}$  \textasciicircum $\{$累乘上界$\}$
+\end{center}
+\item 範例：\\
+我輸入\$\$$\backslash$prod\textunderscore  $\{$i=2$\}$  \textasciicircum $\{$5$\}$ 2x \textunderscore i+1\$\$，便會在下一行出現$$\prod_{i=2}^{5} 2x_{i}+1$$
+\item 練習：\\
+輸入最大概似含數
+\begin{equation}\label{sum2}
+\prod_{i=1}^{n} f(x_i)
+\end{equation}
+\end{enumerate}
+
+\section{矩陣}
+\begin{enumerate}
+\item 矩陣符號的函數公式：\\
+\begin{center}
+\textbf{$\backslash$begin$\{$array$\}$ $\{$...$\}$  a\&b $\backslash$end$\{$array$\}$}
+\end{center}
+\underline{$\{$...$\}$中放入與所需欄位相同的英文字母數量，接續每一欄的資料輸入完畢之後，}\\
+須使用"\&" 符號進行換欄的動作
+\item 範例：\\
+我輸入\emph{\$\$$\backslash$begin$\{$array$\}$ $\{$lr$\}$  a\&b$\backslash\backslash$c\&d$\backslash$end$\{$array$\}$\$\$},便會在下一行出現$$\begin{array}{lr} 
+ a&b\\c&d
+ \end{array}$$
+ \end{enumerate}
+\subsection{矩陣括號}
+\begin{itemize}
+\item 大型小括號輸入法
+\begin{center}
+\emph{\textbf{$\backslash$lfet$($....$\backslash$ right $)$}}
+\end{center}
+\item 大型中括號輸入法
+\begin{center}
+\emph{\textbf{$\backslash$lfet$[$.... $\backslash$right $]$}}
+\end{center}
+\item 大型大括號輸入法
+\begin{center}
+\emph{\textbf{$\backslash$lfet$\{$.... $\backslash$right $\}$}}
+\end{center}
+\item 練習：\\
+輸入大型中括號的2*2單位矩陣
+        $$ I_{2*2} = \left[
+            \begin{array}{lr}
+                1 & 0\\
+                0 & 1\\
+            \end{array} \right] $$
+
+\end{itemize}
+\subsection{删節點} 
+\begin{enumerate}
+\item \textcolor{green!10!blue!90!}{橫向刪節點:}\\
+\colorbox{orange}{使用$\backslash$cdots便可以輸入橫向刪節點}
+\item \textcolor{green!10!red!90!}{縱向刪節點:}\\
+\colorbox{pink}{使用$\backslash$vdots便可以輸入橫向刪節點}
+\item \textcolor{green!10!orange!90!}{斜向刪節點:}\\
+\colorbox{alizarin}{使用$\backslash$ddots便可以輸入橫向刪節點}
+\end{enumerate}
+\newpage
+\section{{矩陣與數學函數綜合練習}}
+\begin{try}\;\;Prove $E(x)=\lambda$ and $Var(x)=\lambda$ for Poission distrubution with parameter=$\lambda$, check equation below
+\begin{align}
+ E(x) &= \sum_{k=1}^{\infty}k f(k)\notag= \sum_{k=1}^{\infty}k\frac{e^{-\lambda}\lambda^{k}}{k!}= \sum_{k=1}^{\infty}\frac{e^{-\lambda}\lambda^{k}}{x_k!}\notag\\[6mm]
+      &= \sum_{k=1}^{\infty}\frac{\lambda e^{-\lambda}\lambda^{k-1}}{(k-1)!}=
+      \lambda \sum_{k=1}^{\infty}\frac{e^{-\lambda}\lambda^{k-1}}{(k-1)!}=
+      \lambda\underbrace{\sum_{k=1}^{\infty}\frac{e^{-\lambda}\lambda^{k-1}}{(k-1)!}}_{\text{=$\sum_{j=k-1}^{\infty}\frac{e^{-\lambda}\lambda^{j}}{j!}=1$}}\notag\\
+      &= \lambda\notag\\
+       E(x^2) &= \sum_{k=1}^{\infty}k^2 f(k)\notag= \sum_{k=1}^{\infty}k^2\frac{e^{-\lambda}\lambda^{k}}{k!}= \lambda\sum_{k=1}^{\infty}k\frac{e^{-\lambda}\lambda^{k-1}}{(k-1)!}\\[6mm]
+     &= \lambda e^{-\lambda}\left(\sum_{k=1}^{\infty}(k-1)\frac{1}{(k-1)!}\lambda^{k-1}+\sum_{k=1}^{\infty}\frac{1}{(k-1)!}\lambda^{k-1}\right)\notag\\
+&= \lambda e^{-\lambda}\left(\lambda\sum_{k=2}^{\infty}\frac{1}{(k-2)!}\lambda^{k-2}+\sum_{k=1}^{\infty}\frac{1}{(k-1)!}\lambda^{k-1}\notag\right)\\
+&= \lambda e^{-\lambda}\left(\lambda\sum_{i=k-2}^{\infty}\frac{1}{i!}\lambda^i+\sum_{j=k-1}^{\infty}\frac{1}{j!}\lambda^j\notag\right)\\
+&=\lambda e^{-\lambda}(\lambda e^{\lambda}+e^{\lambda})=\lambda(\lambda+1)=\lambda^2+\lambda\notag\\
+Var(x)&=E(x^2)-(E(x))^2=\lambda^2+\lambda-(\lambda)^2=\lambda\notag
+\end{align}
+\end{try}
+
+\newpage
+ \begin{try}二維常態下，證明$\rho_{XY}$=$\rho$, 參考證明$(\ref{rho})$
+\begin{align}\label{rho}
+x \sim N(&\mu_{x}, \sigma_{x}^2)\;\;\;\;y \sim N(\mu_{y}, \sigma_{y}^2),\; x\;\mbox{and}\;y \;\mbox{are indepandent}\notag\\[4mm]
+f(x, y)&=(2\pi\rho_{x}\rho_{y}\sqrt{1-\rho^2})^{-1}\notag\\\notag[5mm]
+&*\mbox{exp}\left(-\frac{1}{2(1-\rho^2)}\left(
+(\frac{x-\mu_{x}}{\sigma_{x}})^2-2\rho(\frac{x-\mu_{x}}{\sigma_{x}})(\frac{y-\mu_{y}}{\sigma_{y}})+(\frac{y-\mu_{y}}{\sigma_{y}}^2)\right)\right)\\\notag
+\mbox{And} & \\\notag
+\rho_{xy} &= \frac{\mbox{Cov}(x, y)}{\sigma_{x}\sigma_{y}}=\frac{\mbox{E}(x-\mu_{x})(y-\mu_{y})}{\sigma_{x}\sigma_{y}}=\mbox{E}(\frac{x-\mu_{x}}{\sigma_{x}})(\frac{y-\mu_{y}}{\sigma_{y}})\\\notag[6mm]
+&=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}(\frac{x-\mu_{x}}{\sigma_{x}})(\frac{y-\mu_{y}}{\sigma_{y}})f(x, y)\;dxdy\\\notag[6mm]
+\mbox{Let} \;\;s &=(\frac{x-\mu_{x}}{\sigma_{x}})(\frac{y-\mu_{y}}{\sigma_{y}})\;\;\mbox{and} \;\; t=(\frac{x-\mu_{x}}{\sigma_{x}})\\\notag
+\mbox{Then} \; x &=\sigma_{x}t, \; y=(\sigma_{y}s/t), \; \mbox{and Jacobian}\; J=\sigma_{x}\sigma_{y}/t,\; \mbox{rewrite function}\\\notag[6mm]
+\rho_{xy}&=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}sf\left(\sigma_{x}t+\mu_{x},\;\frac{\sigma_{y}s}{t}+\mu_{y}\right)\vert\frac{\sigma_{x}\sigma_{y}}{t}\vert \;dsdt\\\notag[6mm]
+&=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}s\left(2\pi\sigma_{x}\sigma_{y}\sqrt{1-\rho^2}\right)^{-1}\\
+&*\mbox{exp}\left(-\frac{1}{2(1-\rho^2)}(t^2-2\rho s+(\frac{s}{t})^2\right)\frac{\sigma_{x}\sigma_{y}}{\vert t\vert} \;dsdt\\\notag[6mm]
+\mbox{Because}\;\vert t\vert &=\sqrt{t^2}\;\mbox{and}\; t^2-2\rho s+(\frac{s}{t})^2=(\frac{s-\rho t^2}{t})^2+(1-\rho^2)t^2,\; \mbox{rewrite function}\\\notag[6mm]
+\rho_{xy} &= \int_{-\infty}^{\infty}\frac{1}{\sqrt{2\pi}}\mbox{exp}(-\frac{t^2}{2})\left[\int_{-\infty}^{\infty}\frac{s}{\sqrt{2\pi}\sqrt{(1-\rho^2)t^2}}\mbox{exp}\left(-\frac{(s-\rho t^2)^2}{2(1-\rho^2)t^2}\right)ds\right]dt\\\notag[6mm]
+s &\sim N(\rho t^2, (1-\rho^2)t^2),\;\int_{-\infty}^{\infty}\frac{s}{\sqrt{2\pi}\sqrt{(1-\rho^2)t^2}}\mbox{exp}\left(-\frac{(s-\rho t^2)^2}{2(1-\rho^2)t^2}\right)ds=1\\\notag[4mm]
+\mbox{Then}\; \rho_{xy} &=\int_{-\infty}^{\infty}\frac{\rho t^2}{\sqrt{2\pi}}\mbox{exp}(-\frac{t^2}{2})\; dt=\rho \underbrace{\int_{-\infty}^{\infty}\frac{t^2}{\sqrt{2\pi}}\mbox{exp}(-\frac{t^2}{2})\; dt}_{\int_{-\infty}^{\infty}N(0,1)\;dt=1}\\\notag[2mm]
+\mbox{Prove} \;&\;\rho_{xy}=\rho*1=\rho\\\notag
+\end{align} 
+\end{try}\newpage
+\begin{try} Use MGF of Normal distrubution to prove $E(x)$=$\mu$ and $Var(x)$=$\sigma^2$, check equation$(\ref{normal})$
+\begin{align}\label{normal}
+x \sim N&(\mu_{x}, \sigma_{x}^2)\notag\\
+ M_x(t)&=E(e^{tx}) = \int e^{tx}\frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}dx\notag\\[4mm]
+ \mbox{Let}\; z&=\frac{x-\mu}{\sigma}\;\; \mbox{, which implies}\;\; x = z\sigma + \mu\notag\\[4mm]
+ M_x(t)&=e^{\mu t}\int e^{zt\sigma}\frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{1}{2}z^2}\mid\frac{dx}{dz}\mid dz\notag\\[4mm]
+ &=e^{\mu t}\int e^{zt\sigma}\frac{1}{\sqrt{2\pi}}e^{-\frac{1}{2}z^2}dz\notag\\[4mm]
+&=e^{\mu t} e^{\frac{1}{2}\sigma^2t^2}\notag \;\;=e^{\frac{1}{2}\sigma^2t^2+\mu t}\notag\\[4mm]
+  M_x'(t)&=\frac{dx}{dt}M_x(t)=e^{\frac{1}{2}\sigma^2t^2+\mu t}dx=(\frac{1}{2}\sigma^2(2t)+\mu)e^{\frac{1}{2}\sigma^2t^2+\mu t}\\[4mm]
+  &=(\sigma^2t+\mu)e^{\frac{1}{2}\sigma^2t^2+\mu t}\notag\\[4mm]
+  E(x)&=M_x'(0)=(0+\mu)e^0=\mu\notag\\[4mm]
+    M_x''(t)&=\frac{dx}{dt}M_x'(t)=(\sigma^2t+\mu)e^{\frac{1}{2}\sigma^2t^2+\mu t}\notag\\[4mm]
+    &=(\sigma^2)e^{\frac{1}{2}\sigma^2t^2+\mu t}+(\sigma^2t+\mu)(\frac{1}{2}\sigma^2(2t)+\mu)e^{\frac{1}{2}\sigma^2t^2+\mu t}\notag\\[4mm]
+    &=(\sigma^2)e^{\frac{1}{2}\sigma^2t^2+\mu t}+(\sigma^2t+\mu)(\sigma^2 t+\mu)e^{\frac{1}{2}\sigma^2t^2+\mu t}\notag\\[4mm]
+  Var(x)&=M_x''(0)-E(x)^2=(\sigma^2+\mu^2)-\mu^2=\sigma^2\notag\\[4mm]
+  \mbox{Prove}\; E&(x)=\mu \;\mbox{and}\;Var(x)\sigma^2\notag\\\notag
+\end{align}
+\end{try} 
+\section*{小結}
+在數學函數的輸入過程中，其實可以對照微軟的Microsoft系列，會發現雖然使用\LaTeX 真的比較困難一點，尤其常常括號過多的時候，少一個就會跑錯誤訊息，但是編排出來的文件真的有數學式的美感，學習的過程雖然辛苦，但是也會得到很好的結果。
+\chapter{標號與參照}
+在進行數學類文件的編排時，常常會遇到一堆不同的數學函式，此時就需要借助「標號」的功能，讓讀者能更快速且便捷的搜尋，同時，在文章內容引用時，也有自動化的「參照」功能讓標號自動的輸入在文件中。
+\section{標號}
+\subsection{輸入標號}
+在對方程式進行標號的過程中，需要用到$\backslash$begin$\{$equation$\}$ ... $\backslash$end$\{$equation$\}$或$\backslash$begin$\{$displaymath$\}$ ... $\backslash$end$\{$displaymath$\}$的輸入方式，接著在$\backslash$begin$\{$equation$\}$或$\backslash$begin$\{$displaymath$\}$後方加入$\backslash$label$\{$...$\}$，在...中輸入函數名稱，這樣便可以自動的更新函數編號，例如當我輸入$\backslash$begin$\{$equation$\}$ $\backslash$label$\{$ex1$\}$ 2x+1 $\backslash$end$\{$equation$\}$便會出現\begin{equation}\label{ex1}
+2x+1
+\end{equation}
+\subsection{調整標號位置}
+\begin{enumerate}
+\color{coolblack}
+\item 使用align指令\\
+\colorbox{bananamania}{\textcolor{coolblack}{使用套件 $\{$amsmath$\}$中指令$\{$align$\}$的$\backslash$notag，即可讓該行函數無標號，}}
+例如我輸入$\backslash$ begin $\{$ align$\}$ a=b+c $\backslash$ notag $\backslash$ $\backslash$d=e+f $\backslash$ end $\{$ align $\}$，便會在下一行出現\begin{align} a=b+c\notag\\ d=e+f 
+\end{align}
+\item 使用eqnarray指令\\
+使用指令$\{$eqnarray$\}$的$\backslash$nonumber，即可讓該行函數無標號，
+例如我輸入$\backslash$ begin $\{$eqnarray$\}$ a=b+c$\backslash$ $\backslash$d=e+f $\backslash$nonumber $\backslash$end $\{$eqnarray$\}$，便會在下一行出現\begin{eqnarray} a=b+c\\ d=e+f\nonumber
+\end{eqnarray}
+\item 使用split指令\\
+使用指令$\{$equation$\}$與$\{$split$\}$指令，可讓標號出現在兩數學函數中,\\
+例如我輸入$\backslash$ begin $\{$equation$\}$ $\backslash$ begin $\{$split$\}$ a=b+c$\backslash$ $\backslash$d=e+f$\backslash$ end $\{$split$\}$end $\{$equation$\}$ $\backslash$ ，便會在下一行出現\begin{equation}
+\begin{split}
+a=b+c\\ d=e+f
+\end{split}
+\end{equation}
+\end{enumerate}
+\section{參照}
+在使用完函數的標號之後，,若我們需要在文件中進行參照，僅須在文件中輸入$\{$ $\backslash$ref 標號時的函數名稱$\}$，即會在文件中自動對該方程式進行參照與調整，例如我要引用上方標號的範例公式ex1，我便可以輸入$\{$ $\backslash$ref ex1$\}$，即可出現該函數的標號{\ref{ex1}}，可另外自行輸入括號。\\
+\section*{小結}
+標號與參照的學習過程雖然麻煩，但其實也間接在培養我們命名的能力，尤其在程式語言中，我們若能精準的對元件進行命名，不僅可以縮短我們尋找的時間，當分享給別人的時候，對方也能較迅速的知道我們對每個元件定義為何，從假設abc到一個較有意義的名稱可以說是一個壞習慣更改的過程，但也是一定要走的路。
+
+
+%\end{document}
