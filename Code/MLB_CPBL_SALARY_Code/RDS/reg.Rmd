@@ -1,0 +1,361 @@
+---
+title: "Appendix"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require('Hmisc')
+require('plyr')
+require('reshape2')
+require('Lahman')
+require('dplyr')
+require('mice')
+require('VIM')
+require('kableExtra')
+require('Lahman')
+require('summarytools')
+require('stats')
+require('car')
+require('pls')
+require('caret')
+require('data.table')
+require('devtools')
+require('formattable')
+require('magrittr')
+require('ISLR')
+require('Rcpp')
+require('stringi')
+require('tidyverse')
+require('caret')
+require('leaps')
+require('MASS')
+require('olsrr')
+require('lasso2')
+require('summarytools')
+BatterModel <- readRDS("~/BatterModel.RDS")
+Batterpcr1 <- readRDS("~/Batterpcr1.RDS")
+Batterpcr2 <- readRDS("~/Batterpcr2.RDS")
+Batterpcr3 <- readRDS("~/Batterpcr3.RDS")
+spmodel <- readRDS("~/spmodel.RDS")
+sppcr1 <- readRDS("~/sppcr1.RDS")
+sppcr2 <- readRDS("~/sppcr2.RDS")
+sppcr3 <- readRDS("~/sppcr3.RDS")
+Teammodel <- readRDS("~/Teammodel.RDS")
+teampcr1 <- readRDS("~/teampcr1.RDS")
+teampcr2 <- readRDS("~/teampcr2.RDS")
+Teams1985_2016 <- readRDS("~/Teams1985_2016.RDS")
+batting_salary <- readRDS("~/batting_salary.RDS")
+starting_picther_salary <- readRDS("~/starting_pitcher_salary.RDS")
+```
+
+## Batter
+
+#### Statistics
+```{r stat}
+print(dfSummary(batting_salary, graph.magnif = 0.75), method='render')
+```
+
+#### LM
+
+```{r bat}
+summary(BatterModel)
+round(summary(BatterModel)$coefficients, 4)
+confint(BatterModel)
+plot(BatterModel)
+```
+
+當我們建立出一個線性回歸時，必須要確認其殘差(residual)是否符合下面三個假設：
+
+常態性(Normality)
+
+獨立性(Independence)
+
+變異數同質性(Homogeneity of Variance)
+
+故首先我們要先從回歸模型中找到殘差的值，可以使用names()函式，查看回歸模型內具有的資訊
+```{r bat1}
+str(BatterModel)
+names(BatterModel)
+```
+
+其中，residuals就是指殘差的值(coefficients代表係數)，因此我們可以取出來後進行上面三個假設的檢定：
+常態性假設
+shapiro.test()函式可以用來檢驗殘差的常態性：
+
+```{r bat2}
+shapiro.test(BatterModel$residual)
+```
+虛無假設H0:殘差服從常態分配，因為p-value < 0.05，代表拒絕H0。
+
+獨立性假設
+要檢驗殘差的獨立性，需要使用套件car中的durbinWatsonTest()函式：
+```{r bat3}
+# 因為這個函式會自動去抓模型中的殘差，故這裡放的是模型，而不是殘差的值
+durbinWatsonTest(BatterModel) 
+```
+虛無假設H0:殘差間相互獨立，因為p-value < 0.05，代表拒絕H0。
+
+變異數同質性假設
+要檢驗殘差的變異數同質性，需要使用套件car中的ncvTest()函式：
+```{r bat4}
+# 因為這個函式會自動去抓模型中的殘差，故這裡放的是模型，而不是殘差的值
+ncvTest(BatterModel) 
+```
+虛無假設H0:殘差變異數具有同質性，因為p-value < 0.05，代表拒絕H0。
+
+#### pcr
+
+You can also embed plots, for example:
+
+```{r batpcr, echo=FALSE}
+summary(Batterpcr1)
+validationplot(Batterpcr1, val.type = "MSEP")
+predplot(Batterpcr1)
+
+# regression coefficients
+# coef(pcr.fit, intercept = TRUE) # all components
+coef(Batterpcr1, ncomp = 3, intercept = TRUE) # only 3
+coef(Batterpcr1, ncomp = 1:3, intercept = TRUE)
+
+# plot regression coefficients
+coefplot(Batterpcr1)
+coefplot(Batterpcr1, ncomp = 1:3,
+         legendpos = "bottomleft")
+
+# Train vs CV
+plot(Batterpcr1, labels = c(1:dim(batting_salary)[1]), which = "validation")
+plot(Batterpcr1, "validation", estimate = c("train", "CV"), legendpos = "topright")
+plot(Batterpcr1, "validation", estimate = c("train", "CV"), 
+     val.type = "R2", legendpos = "bottomright")
+
+
+# Scores:
+scoreplot(Batterpcr1, labels = c(1:dim(batting_salary)[1])) # only 1 and 2
+scoreplot(Batterpcr1, comps = 1:3, 
+          labels = c(1:dim(batting_salary)[1]))
+
+scoreplot(Batterpcr1) # only 1 and 2
+scoreplot(Batterpcr1, comps = 1:3)
+
+# Loadings:
+loadingplot(Batterpcr1, comps = 1:3, scatter = TRUE, 
+            labels = c(1:dim(batting_salary)[1]))
+
+loadingplot(Batterpcr1, comps = 1:3, scatter = TRUE)
+```
+
+```{r batpcr2, echo=FALSE}
+summary(Batterpcr2)
+# str(pcr.fit)
+validationplot(Batterpcr2, val.type="MSEP")
+# comapre to scale=TRUE
+summary(Batterpcr3)
+validationplot(Batterpcr3, val.type="MSEP")
+#
+pcr.x <- (capture.output(summary(Batterpcr2)))
+```
+
+## Team
+
+#### Statistics
+```{r tstat}
+print(dfSummary(Teams1985_2016, graph.magnif = 0.75), method='render')
+```
+
+#### LM
+
+```{r team}
+summary(Teammodel)
+round(summary(Teammodel)$coefficients, 4)
+confint(Teammodel)
+plot(Teammodel)
+```
+
+當我們建立出一個線性回歸時，必須要確認其殘差(residual)是否符合下面三個假設：
+
+常態性(Normality)
+
+獨立性(Independence)
+
+變異數同質性(Homogeneity of Variance)
+
+故首先我們要先從回歸模型中找到殘差的值，可以使用names()函式，查看回歸模型內具有的資訊
+```{r team1}
+str(Teammodel)
+names(Teammodel)
+```
+
+其中，residuals就是指殘差的值(coefficients代表係數)，因此我們可以取出來後進行上面三個假設的檢定：
+常態性假設
+shapiro.test()函式可以用來檢驗殘差的常態性：
+
+```{r team2}
+shapiro.test(Teammodel$residual)
+```
+虛無假設H0:殘差服從常態分配，因為p-value < 0.05，代表拒絕H0。
+
+獨立性假設
+要檢驗殘差的獨立性，需要使用套件car中的durbinWatsonTest()函式：
+```{r team3}
+# 因為這個函式會自動去抓模型中的殘差，故這裡放的是模型，而不是殘差的值
+durbinWatsonTest(Teammodel) 
+```
+虛無假設H0:殘差間相互獨立，因為p-value > 0.05，代表不拒絕H0。
+
+變異數同質性假設
+要檢驗殘差的變異數同質性，需要使用套件car中的ncvTest()函式：
+```{r team4}
+# 因為這個函式會自動去抓模型中的殘差，故這裡放的是模型，而不是殘差的值
+ncvTest(Teammodel) 
+```
+虛無假設H0:殘差變異數具有同質性，因為p-value < 0.05，代表拒絕H0。
+
+#### pcr
+
+You can also embed plots, for example:
+
+```{r tpcr, echo=FALSE}
+summary(teampcr1)
+validationplot(teampcr1, val.type = "MSEP")
+predplot(teampcr1)
+
+# regression coefficients
+# coef(pcr.fit, intercept = TRUE) # all components
+coef(teampcr1, ncomp = 5, intercept = TRUE) # only 3
+coef(teampcr1, ncomp = 1:5, intercept = TRUE)
+
+# plot regression coefficients
+coefplot(teampcr1)
+coefplot(teampcr1, ncomp = 1:5,
+         legendpos = "bottomleft")
+
+# Train vs CV
+plot(teampcr1, labels = c(1:dim(Teams1985_2016)[1]), which = "validation")
+plot(teampcr1, "validation", estimate = c("train", "CV"), legendpos = "topright")
+plot(teampcr1, "validation", estimate = c("train", "CV"), 
+     val.type = "R2", legendpos = "bottomright")
+
+
+# Scores:
+scoreplot(teampcr1, labels = c(1:dim(Teams1985_2016)[1])) # only 1 and 2
+scoreplot(teampcr1, comps = 1:5, 
+          labels = c(1:dim(Teams1985_2016)[1]))
+
+scoreplot(teampcr1) # only 1 and 2
+scoreplot(teampcr1, comps = 1:3)
+
+# Loadings:
+loadingplot(teampcr1, comps = 1:3, scatter = TRUE, 
+            labels = c(1:dim(Teams1985_2016)[1]))
+
+loadingplot(teampcr1, comps = 1:3, scatter = TRUE)
+```
+
+## Starting Pitcher
+
+#### Statistics
+```{r pstat}
+#starting_picther_salary <- readRDS("~/starting_pitcher_salary.RDS")
+#describe(starting_pitcher_salary)
+```
+
+#### LM
+
+```{r sp}
+summary(spmodel)
+round(summary(spmodel)$coefficients, 4)
+confint(spmodel)
+plot(spmodel)
+```
+
+當我們建立出一個線性回歸時，必須要確認其殘差(residual)是否符合下面三個假設：
+
+常態性(Normality)
+
+獨立性(Independence)
+
+變異數同質性(Homogeneity of Variance)
+
+故首先我們要先從回歸模型中找到殘差的值，可以使用names()函式，查看回歸模型內具有的資訊
+```{r sp1}
+str(spmodel)
+names(spmodel)
+```
+
+其中，residuals就是指殘差的值(coefficients代表係數)，因此我們可以取出來後進行上面三個假設的檢定：
+常態性假設
+shapiro.test()函式可以用來檢驗殘差的常態性：
+
+```{r sp2}
+shapiro.test(spmodel$residual)
+```
+虛無假設H0:殘差服從常態分配，因為p-value < 0.05，代表拒絕H0。
+
+獨立性假設
+要檢驗殘差的獨立性，需要使用套件car中的durbinWatsonTest()函式：
+```{r sp3}
+# 因為這個函式會自動去抓模型中的殘差，故這裡放的是模型，而不是殘差的值
+durbinWatsonTest(spmodel) 
+```
+虛無假設H0:殘差間相互獨立，因為p-value < 0.05，代表拒絕H0。
+
+變異數同質性假設
+要檢驗殘差的變異數同質性，需要使用套件car中的ncvTest()函式：
+```{r sp4, warning=FALSE}
+# 因為這個函式會自動去抓模型中的殘差，故這裡放的是模型，而不是殘差的值
+# ncvTest(spmodel) 
+```
+虛無假設H0:殘差變異數具有同質性，因為p-value < 0.05，代表拒絕H0。
+
+#### pcr
+
+You can also embed plots, for example:
+
+```{r sppcr, echo=FALSE}
+summary(sppcr1)
+validationplot(sppcr1, val.type = "MSEP")
+predplot(sppcr1)
+
+# regression coefficients
+# coef(pcr.fit, intercept = TRUE) # all components
+coef(sppcr1, ncomp = 3, intercept = TRUE) # only 3
+coef(sppcr1, ncomp = 1:3, intercept = TRUE)
+
+# plot regression coefficients
+coefplot(sppcr1)
+coefplot(sppcr1, ncomp = 1:3,
+         legendpos = "bottomleft")
+
+# Train vs CV
+plot(sppcr1, labels = c(1:dim(starting_picther_salary)[1]), which = "validation")
+plot(sppcr1, "validation", estimate = c("train", "CV"), legendpos = "topright")
+plot(sppcr1, "validation", estimate = c("train", "CV"), 
+     val.type = "R2", legendpos = "bottomright")
+
+
+# Scores:
+scoreplot(sppcr1, labels = c(1:dim(starting_picther_salary)[1])) # only 1 and 2
+scoreplot(sppcr1, comps = 1:3, 
+          labels = c(1:dim(starting_picther_salary)[1]))
+
+scoreplot(sppcr1) # only 1 and 2
+scoreplot(sppcr1, comps = 1:3)
+
+# Loadings:
+loadingplot(sppcr1, comps = 1:3, scatter = TRUE, 
+            labels = c(1:dim(batting_salary)[1]))
+
+loadingplot(sppcr1, comps = 1:3, scatter = TRUE)
+```
+
+```{r sppcr2, echo=FALSE}
+summary(sppcr2)
+# str(pcr.fit)
+validationplot(sppcr2, val.type="MSEP")
+# comapre to scale=TRUE
+summary(sppcr3)
+validationplot(sppcr3, val.type="MSEP")
+#
+pcr.x <- (capture.output(summary(sppcr2)))
+```
